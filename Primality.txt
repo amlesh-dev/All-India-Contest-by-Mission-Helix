@@ -1,0 +1,78 @@
+Ayush is always fascinated by the prime numbers. So he calculates first few prime numbers.
+
+There are Q queries, in each query an integer  N will be given, you need to tell the sum of the first N prime numbers.
+
+Input Format
+
+First line contains an integer Q denoting to number of queries
+
+Next  lines contain one integer each, denoting to the N explained in problem statement
+
+Constraints
+Q<=1000
+N<=10^5
+
+Output Format
+
+For each query output a single integer denoting the required answer.
+
+Sample Input 0
+
+5
+1
+2
+3
+4
+5
+Sample Output 0
+
+2
+5
+10
+17
+28
+SOLUTION
+#include <bits/stdc++.h>
+using namespace std;
+
+
+vector<int> Generate() {
+  int N = 1500000;
+  vector<bool> prime;
+  prime.resize(N, true);
+  prime[0] = prime[1] = false;
+  for(int i = 2; i * i <= N; i++) {
+      if (!prime[i])
+          continue;
+    int j = i * i;
+    while(j < N){
+      prime[j] = false;
+      j += i;
+    }
+  }
+  vector<int> p;
+  for (int i = 2; i < N; i++) {
+    if (prime[i])
+      p.push_back(i);
+  }
+  return move(p);
+}
+
+int main() {
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL); cout.tie(NULL);
+  auto prime = Generate();
+  int n = prime.size();
+  vector<long long> sum(n);
+  sum[0] = 2;
+  for (int i = 1; i < n; i++) {
+    sum[i] = prime[i] + sum[i-1];
+  }
+  int q, t;
+  cin >> q;
+  while (q--) {
+    cin >> t;
+    cout << sum[t - 1] << endl;
+  }
+  return 0;
+}

@@ -1,0 +1,69 @@
+In a club ; there are B boys ; and G girls, and the girls would like to sit together in a row. That is ; between any two girls ; there should not be any boys between them.
+
+Find in how many ways ; can this seating arrangement be done ; such that all girls always sit together. Note ; that all boys and all girls have to be seated.
+
+Since the answer may be huge ; print it modulo 10^9+7.
+
+Input Format
+
+The first line of the input contains a single integer T, denoting the number of test cases.
+
+Then T lines follow.
+
+Each of those T lines contain two space seperated integers G and B ; denoting the number of Girls and Boys respectively.
+
+Constraints
+1<=T<=10^5
+0<=G,B<=10^6
+
+Output Format
+
+For each test case ; in a single line ; print the number of permutations satisfying the given conditions.
+
+Sample Input 0
+
+3
+1 2
+4 2
+2 4
+Sample Output 0
+
+6
+144
+240
+SOLUTION
+#include <bits/stdc++.h>
+using namespace std;
+long long m = 1e9+7;
+vector<long long> f;
+
+void fac() {
+  long long n = 1000005;
+  f.resize(n+1);
+  f[0] = 1;
+  for (int i  = 1; i <= n; i++) {
+    f[i] = (f[i-1] * i) % m;
+  }
+}
+
+
+int main() {
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL); cout.tie(NULL);
+  fac();
+  int q;
+  cin >> q;
+  while(q--) {
+    int b, g;
+    cin >> g >> b;
+    long long res;
+    if (b && g)
+        res = (f[b+1] * f[g]) % m;
+    else if (b)
+        res = f[b];
+    else
+        res = f[g];
+    cout << res << endl;
+  }
+  return 0;
+}

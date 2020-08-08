@@ -1,0 +1,89 @@
+Ritesh saw a computer today the first time in his life. Poor kid, somehow rote learned all the 26 letters in the english alphabet in the correct order somehow, but now, as he got to see the keyboard, he got really frustrated seeing the letters jumbled in some random order.
+
+But somehow, the boy didn't gave up, and learned the placing of the letters on the keyboard too !
+
+Now, once he has overcome the hurdle, he starts enjoying it. Thus, we wants to face more challenges regarding some random shuffled order of the english alphabets.
+
+And he thinks, that you will find tasks on it interesting too !
+
+Hence, You will be provided with some random order of the english lowercase letters. Lets say, this is the new alphabetical order.
+
+You will also be given n strings. You need to re-arrange the given n strings in such a way, that it obeys the given alphabetical order.
+
+It means, that the strings should be sorted in non-decreasing order, with respect to the given alphabetical order.
+
+Note : You should not permute the individual letters of any of the given strings. Rather, you need to create an ordering of the given strings.
+
+See samples to clarify.
+
+Input Format
+
+The first line of the input consists of a single string of size 26, with all lowercase characters, which is the new ordering in which you have to re-arrange the strings.
+
+Then, the next line contains a single integer n, the number of strings.
+
+Then, n lines follow, where each line contains a single string, where each character of the string is a lower case english letter.
+
+Constraints
+|Si|<=100
+ ( Where  denotes the length of the string s ).
+N<=1000
+
+All the strings in the input contain lowercase characters.
+
+Output Format
+
+Print the  strings in the correct order as per the required condition.
+
+Sample Input 0
+
+qwertyuiopasdfghjklzxcvbnm
+2
+abcd
+qwer
+Sample Output 0
+
+qwer    
+abcd
+Explanation 0
+
+As you can see, with the new alphabetical order enforced, the string abcd has to be now printed after the string qwer.
+SOLUTION
+#include <bits/stdc++.h>
+using namespace std;
+unordered_map<char, int> mp;
+
+bool cust(const string &a, const string & b) {
+    int i = 0, j = 0;
+    int n = a.size(), m = b.size();
+    while (i < n && j < m) {
+        if (mp[a[i]] < mp[b[j]])
+            return true;
+        else if (mp[a[i]] > mp[b[j]])
+            return false;
+        i++, j++;
+    }
+    if (i == n)
+        return true;
+    return false;
+}
+
+int main() {
+    string rule;
+    cin >> rule;
+    int sz = rule.size();
+    for (int i = 0; i < sz; i++) {
+        mp[rule[i]] = i;
+    }
+    int n;
+    cin >> n;
+    vector<string> v(n);
+    for (int i = 0; i < n; i++) {
+        cin >> v[i];
+    }
+    sort(v.begin(), v.end(), cust);
+    for (auto s : v) {
+        cout << s << endl;
+    }
+    return 0;
+}
